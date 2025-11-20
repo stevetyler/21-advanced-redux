@@ -28,6 +28,7 @@ const cartSlice = createSlice({
             }
         },
         toggleCart(state) {
+            //console.log('toggling cart visibility');
             state.isVisible = !state.isVisible;
         },
     }
