@@ -34,5 +34,5 @@ const cartSlice = createSlice({
     }
 });
 
-export const cartActions = cartSlice.actions;
+export const cartActions = cartSlice.actions; // this exports the generated action creators based on the reducer functions defined in the slice
 export default cartSlice.reducer;
