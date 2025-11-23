@@ -18,7 +18,6 @@ const Products = (props) => {
       {availableProducts.map(product => (
         <ul key={product.id}>
           <ProductItem
-            
             product={product}
           />
         </ul>
