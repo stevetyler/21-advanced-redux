@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialCartState = { items: [], isVisible: false, totalQuantity: 0};
+const initialCartState = { items: [], totalQuantity: 0};
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -26,11 +26,7 @@ const cartSlice = createSlice({
                     state.items[existingItemIndex].quantity--;
                 }
             }
-        },
-        toggleCart(state) {
-            //console.log('toggling cart visibility');
-            state.isVisible = !state.isVisible;
-        },
+        }
     }
 });
 
