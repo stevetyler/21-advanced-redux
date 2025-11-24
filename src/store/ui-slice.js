@@ -13,3 +13,5 @@ const uiSlice = createSlice({
 export const uiActions = uiSlice.actions;
 
 export default uiSlice.reducer;
+
+// firebase connection https://react-udemy-ba241-default-rtdb.firebaseio.com/
