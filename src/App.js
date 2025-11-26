@@ -4,8 +4,9 @@ import Products from './components/Shop/Products';
 import { useSelector } from 'react-redux';
 import { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { uiActions } from './store/ui-slice';
 import Notification from './components/UI/Notification';
+import { sendCartData } from './store/cart-actions';
+import { fetchCartData } from './store/cart-actions';
 
 let isInitial = true;
 
@@ -15,47 +16,19 @@ function App() {
   const isCartVisible = useSelector(state => state.ui.cartIsVisible);
   const notification = useSelector(state => state.ui.notification);
 
-  // moved to thunk action creator in cart-slice.js
-  // useEffect(() => {
-  //   const sendCartData = async () => {  
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]); // dispatch is stable, won't change between renders
 
-  //     dispatch(uiActions.showNotification({
-  //       status: 'pending',
-  //       title: 'Sending...',
-  //       message: 'Sending cart data!'
-  //     }));
-
-  //     const response = await fetch('https://react-udemy-ba241-default-rtdb.firebaseio.com/cart.json', {
-  //       method: 'PUT', // overwrite existing data, idempotent
-  //       body: JSON.stringify(cart)
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Sending cart data failed.');
-  //     } 
-
-  //     dispatch(uiActions.showNotification({
-  //       status: 'success',
-  //       title: 'Success!',
-  //       message: 'Sent cart data successfully!'
-  //     }));
-  //   }
-
-  //   if (isInitial) {
-  //     isInitial = false;
-  //     return;
-  //   }
-
-  //   sendCartData().catch((error) => {
-  //     dispatch(uiActions.showNotification({
-  //       status: 'error',
-  //       title: 'Error!',
-  //       message: 'Sending cart data failed!'
-  //     }));
-  //   });
-  
-  // } , [ cart, dispatch ]);
-
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false; // prevent overwriting data on initial load
+      return;
+    }
+    if (cart.changed) {
+      dispatch(sendCartData(cart)); // redux accepts thunks like normal actions
+    }
+  }, [cart, dispatch]);
 
   return (
     <Fragment>
